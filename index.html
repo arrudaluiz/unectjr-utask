@@ -16,21 +16,44 @@
 
 <body>
   <header class="header">
-    <img class="logo" src="images/logo-white.svg" alt="logo">
+    <img class="logo" src="images/logo-white.svg" alt="logotipo Unect Júnior">
     <h1 class="title">uTask 3.0</h1>
     <div class="mode-toggle">
-      <span class="material-icons light-mode">light_mode</span>
+      <span aria-hidden="true" class="material-icons icon">light_mode</span>
     </div>
   </header>
 
-  <main class="main"></main>
+  <main class="main">
+    <div class="quote">
+      <button class="button">
+        <div class="icon-border"><span aria-hidden="true" class="material-icons icon">tips_and_updates</span></div>
+        <span class="label">Frase do dia</span>
+      </button>
+
+      <div class="backdrop">
+        <div class="quote-box">
+          <div class="quote-header">
+            <div class="icon-border"><span aria-hidden="true" class="material-icons icon">tips_and_updates</span></div>
+            <span class="label">Frase do dia</span>
+            <button class="close"><span class="material-icons icon">close</span></button>
+          </div>
+          <p class="phrase">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab voluptatum ducimus assumenda id voluptas.
+            Laboriosam adipisci dicta dolorem natus? Esse rerum corrupti saepe dolore. Aliquid eligendi magni veniam?
+            Cupiditate, corporis?
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
 
   <footer class="footer">
     <p class="description">
       &#169; Processo de Trainee <strong><a href="https://unect.com.br/" target="_blank">Unect Jr.</a></strong> 2023.1
     </p>
     <p class="author">
-      Feito com <span class="material-icons heart">favorite</span> por <strong>Luiz A. T. de Arruda</strong>
+      Feito com <span aria-hidden="true" class="material-icons heart">favorite</span> por <strong>Luiz A. T. de
+        Arruda</strong>
     </p>
   </footer>
 </body>
