@@ -12,50 +12,129 @@
   <link rel="stylesheet" href="styles/index.css">
   <link rel="icon" href="images/logo.svg">
   <title>uTask 3.0</title>
+  <script src="scripts/index.js" defer></script>
 </head>
 
 <body>
-  <header class="header">
-    <img class="logo" src="images/logo-white.svg" alt="logotipo Unect Júnior">
+  <header>
+    <img class="logo" src="images/logo-white.svg" alt="Unect Júnior">
     <h1 class="title">uTask 3.0</h1>
-    <div class="mode-toggle">
-      <span aria-hidden="true" class="material-icons icon">light_mode</span>
+    <div class="mode-toggle" aria-hidden="true">
+      <span class="material-icons icon">light_mode</span>
     </div>
   </header>
 
-  <main class="main">
-    <div class="quote">
-      <button class="button">
-        <div class="icon-border"><span aria-hidden="true" class="material-icons icon">tips_and_updates</span></div>
-        <span class="label">Frase do dia</span>
-      </button>
+  <main>
+    <button id="quote-button" class="quote-button" aria-label="Abrir frase do dia">
+      <div class="icon-border" aria-hidden="true"><span class="material-icons icon">tips_and_updates</span></div>
+      <span class="label" aria-hidden="true">Frase do dia</span>
+    </button>
 
-      <div class="backdrop">
-        <div class="quote-box">
-          <div class="quote-header">
-            <div class="icon-border"><span aria-hidden="true" class="material-icons icon">tips_and_updates</span></div>
-            <span class="label">Frase do dia</span>
-            <button class="close"><span class="material-icons icon">close</span></button>
-          </div>
+    <div class="quote-space">
+      <div class="quote-box">
+        <div class="icon-border" aria-hidden="true"><span class="material-icons icon">tips_and_updates</span></div>
+        <div class="quote-body">
+          <span class="label">Frase do dia</span>
           <p class="phrase">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab voluptatum ducimus assumenda id voluptas.
-            Laboriosam adipisci dicta dolorem natus? Esse rerum corrupti saepe dolore. Aliquid eligendi magni veniam?
-            Cupiditate, corporis?
+            Se você quer um pedacinho do paraíso, acredite em Deus. Mas se você quer conquistar o mundo, acredite em
+            você porque Deus já te deu tudo o que você precisa para você vencer.
           </p>
         </div>
       </div>
     </div>
+
+    <div class="todo">
+      <div class="board">
+        <button class="move-list" aria-label="Mover para lista anterior">
+          <span class="material-icons" aria-hidden="true">navigate_before</span>
+        </button>
+
+        <div class="board-body">
+          <div class="list">
+            <div class="list-header">
+              <h2 class="title">A fazer</h2>
+              <button id="new-task-button" class="add" aria-label="Adicionar tarefa">
+                <span aria-hidden="true" class="material-icons icon">add</span>
+              </button>
+            </div>
+            <div id="todo-list" class="list-items">
+            </div>
+          </div>
+
+          <div class="list">
+            <div class="list-header">
+              <h2 class="title">Em andamento</h2>
+            </div>
+            <div id="doing-list" class="list-items">
+            </div>
+          </div>
+
+          <div class="list">
+            <div class="list-header">
+              <h2 class="title">Feito</h2>
+            </div>
+            <div id="done-list" class="list-items">
+            </div>
+          </div>
+        </div>
+
+        <button class="move-list" aria-label="Mover para próxima lista">
+          <span class="material-icons" aria-hidden="true">navigate_next</span>
+        </button>
+      </div>
+
+      <div class="board-footer" aria-hidden="true">
+        <div class="circle active"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+      </div>
+    </div>
   </main>
 
-  <footer class="footer">
+  <footer>
     <p class="description">
       &#169; Processo de Trainee <strong><a href="https://unect.com.br/" target="_blank">Unect Jr.</a></strong> 2023.1
     </p>
     <p class="author">
-      Feito com <span aria-hidden="true" class="material-icons heart">favorite</span> por <strong>Luiz A. T. de
-        Arruda</strong>
+      Feito com <span aria-hidden="true" class="material-icons heart">favorite</span>
+      por <strong>Luiz A. T. de Arruda</strong>
     </p>
   </footer>
+
+  <div id="quote-modal" class="backdrop">
+    <div class="quote-modal">
+      <div class="quote-header">
+        <div class="icon-border" aria-hidden="true"><span class="material-icons icon">tips_and_updates</span></div>
+        <span class="label">Frase do dia</span>
+        <button id="close-quote-modal-button" class="close" aria-label="Fechar frase do dia">
+          <span class="material-icons icon" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <p class="phrase">
+        Se você quer um pedacinho do paraíso, acredite em Deus. Mas se você quer conquistar o mundo, acredite em
+        você porque Deus já te deu tudo o que você precisa para você vencer.
+      </p>
+    </div>
+  </div>
+
+  <div id="task-modal" class="backdrop">
+    <div class="task-modal">
+      <div class="task-header">
+        <span class="label">Nova Task</span>
+        <div class="style-bar"></div>
+        <button id="close-task-modal-button" class="close" aria-label="Fechar formulário de tarefa">
+          <span class="material-icons icon" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <form id="task-form" class="task-form">
+        <label for="title">Título *</label>
+        <input type="text" id="title" name="title" required>
+        <label for="description">Descrição</label>
+        <textarea id="description" name="description" rows="4"></textarea>
+        <input type="submit" value="Criar task">
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>
