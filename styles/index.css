@@ -189,32 +189,56 @@ main {
 }
 
 .todo .move-list {
+  position: absolute;
+  z-index: 1;
   padding: 0;
-  align-self: center;
   width: 12vw;
-  height: 12vh;
+  height: inherit;
   font-size: 30px;
   border: none;
   color: var(--main-bg-color);
   background-color: transparent;
 }
 
+#move-left-button {
+  left: 0;
+}
+
+#move-right-button {
+  right: 0;
+}
+
 .todo .board {
+  position: relative;
   height: calc(100vh - 334px);
-  display: flex;
 }
 
 .todo .board-body {
-  flex: 1;
+  height: inherit;
+  position: absolute;
+  right: auto;
   display: flex;
   justify-content: space-between;
-  overflow: hidden;
+  /* overflow: hidden; */
+  transition: 0.3s ease-out;
+}
+
+.todo .board-body.start {
+  left: 12vw;
+}
+
+.todo .board-body.center {
+  left: -76vw;
+}
+
+.todo .board-body.end {
+  left: -164vw;
 }
 
 .todo .board-body .list {
   width: 76vw;
   min-width: 76vw;
-  margin-right: 3.1vw;
+  margin-right: 12vw;
   display: flex;
   flex-direction: column;
 }
@@ -344,6 +368,7 @@ main {
 .task .expand {
   visibility: collapse;
   position: absolute;
+  width: 100%;
   margin-bottom: 6px;
   padding: 0;
   font-weight: 300;
@@ -613,15 +638,16 @@ footer .author .heart {
 
   .todo .move-list {
     visibility: collapse;
-    position: absolute;
   }
 
   .todo .board {
+    position: inherit;
     overflow: visible;
     height: calc(100vh - 345px);
   }
 
   .todo .board-body {
+    position: inherit;
     width: inherit;
     max-width: inherit;
   }

@@ -3,6 +3,9 @@ const quoteModal = document.querySelector('#quote-modal');
 const closeQuoteModalButton = document.querySelector(
   '#close-quote-modal-button'
 );
+const moveLeftButton = document.querySelector('#move-left-button');
+const moveRightButton = document.querySelector('#move-right-button');
+const listBoard = document.querySelector('#list-board');
 const todoList = document.querySelector('#todo-list');
 const doingList = document.querySelector('#doing-list');
 const doneList = document.querySelector('#done-list');
@@ -131,6 +134,26 @@ quoteButton.addEventListener('click', () => {
 
 closeQuoteModalButton.addEventListener('click', () => {
   quoteModal.classList.remove('modal-active');
+});
+
+moveLeftButton.addEventListener('click', () => {
+  if (listBoard.classList.contains('end')) {
+    listBoard.classList.remove('end');
+    listBoard.classList.add('center');
+  } else if (listBoard.classList.contains('center')) {
+    listBoard.classList.remove('center');
+    listBoard.classList.add('start');
+  }
+});
+
+moveRightButton.addEventListener('click', () => {
+  if (listBoard.classList.contains('start')) {
+    listBoard.classList.remove('start');
+    listBoard.classList.add('center');
+  } else if (listBoard.classList.contains('center')) {
+    listBoard.classList.remove('center');
+    listBoard.classList.add('end');
+  }
 });
 
 newTaskButton.addEventListener('click', () => {
