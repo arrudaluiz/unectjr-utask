@@ -15,6 +15,7 @@ const closeTaskModalButton = document.querySelector('#close-task-modal-button');
 const taskForm = document.querySelector('#task-form');
 const taskTitleInput = document.querySelector('#title');
 const taskDescriptionInput = document.querySelector('#description');
+const listIndicators = document.querySelector('.board-footer').children;
 
 const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 const toDo = 'to do';
@@ -54,6 +55,10 @@ function createTask(task) {
         <span aria-hidden="true" class="material-icons icon">more_vert</span>
       </button>
       <div class="menu">
+        <button class="option-button edit-button">
+          <span aria-hidden="true" class="material-icons icon">edit</span>
+          <span>Editar</span>
+        </button>
         <button class="option-button delete-button">
           <span aria-hidden="true" class="material-icons icon">delete_outline</span>
           <span>Excluir</span>
@@ -105,21 +110,31 @@ function updateListBoard() {
   });
 }
 
-function addTask(event) {
+function saveTask(event) {
   event.preventDefault();
 
-  const task = {
-    id: `task-${crypto.randomUUID()}`,
-    title: taskTitleInput.value,
-    description: taskDescriptionInput.value,
-    status: toDo
-  };
+  if (taskForm.lastElementChild.name === 'add') {
+    const task = {
+      id: `task-${crypto.randomUUID()}`,
+      title: taskTitleInput.value,
+      description: taskDescriptionInput.value,
+      status: toDo
+    };
 
-  tasks.push(task);
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-  const taskElement = createTask(task);
-
-  todoList.appendChild(taskElement);
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    const taskElement = createTask(task);
+    todoList.appendChild(taskElement);
+  } else {
+    const index = tasks.findIndex(
+      (task) => task.id === taskForm.lastElementChild.value
+    );
+    tasks[index].title = taskTitleInput.value;
+    tasks[index].description = taskDescriptionInput.value;
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    const taskElement = createTask(tasks[index]);
+    listBoard.querySelector(`#${tasks[index].id}`).replaceWith(taskElement);
+  }
   taskForm.reset();
   taskModal.classList.remove('modal-active');
 }
@@ -182,6 +197,16 @@ function moveTaskForward(id) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+function editTask(id) {
+  const index = tasks.findIndex((task) => task.id === id);
+  taskForm.lastElementChild.name = 'edit';
+  taskForm.lastElementChild.value = id;
+  taskTitleInput.value = tasks[index].title;
+  taskDescriptionInput.value = tasks[index].description;
+  taskModal.firstElementChild.classList.add('editing');
+  taskModal.classList.add('modal-active');
+}
+
 function deleteTask(id) {
   const index = tasks.findIndex((task) => task.id === id);
   tasks.splice(index, 1);
@@ -205,34 +230,47 @@ closeQuoteModalButton.addEventListener('click', () => {
 });
 
 moveLeftButton.addEventListener('click', () => {
+  for (const indicator of listIndicators) {
+    indicator.classList.remove('active');
+  }
   if (listBoard.classList.contains('end')) {
     listBoard.classList.remove('end');
     listBoard.classList.add('center');
+    listIndicators[1].classList.add('active');
   } else if (listBoard.classList.contains('center')) {
     listBoard.classList.remove('center');
     listBoard.classList.add('start');
+    listIndicators[0].classList.add('active');
   }
 });
 
 moveRightButton.addEventListener('click', () => {
+  for (const indicator of listIndicators) {
+    indicator.classList.remove('active');
+  }
   if (listBoard.classList.contains('start')) {
     listBoard.classList.remove('start');
     listBoard.classList.add('center');
+    listIndicators[1].classList.add('active');
   } else if (listBoard.classList.contains('center')) {
     listBoard.classList.remove('center');
     listBoard.classList.add('end');
+    listIndicators[2].classList.add('active');
   }
 });
 
 newTaskButton.addEventListener('click', () => {
+  taskForm.lastElementChild.name = 'add';
   taskModal.classList.add('modal-active');
 });
 
 closeTaskModalButton.addEventListener('click', () => {
+  taskForm.reset();
+  taskModal.firstElementChild.classList.remove('editing');
   taskModal.classList.remove('modal-active');
 });
 
-taskForm.addEventListener('submit', addTask);
+taskForm.addEventListener('submit', saveTask);
 
 listBoard.addEventListener('click', (event) => {
   if (
@@ -269,12 +307,44 @@ listBoard.addEventListener('click', (event) => {
     const taskId = event.target.closest('.task').id;
     listBoard.querySelector(`#${taskId} .menu`).classList.toggle('active');
   } else if (
+    event.target.classList.contains('edit-button') ||
+    event.target.parentElement.classList.contains('edit-button')
+  ) {
+    /** Task edit button */
+    const taskId = event.target.closest('.task').id;
+    listBoard.querySelector(`#${taskId} .menu`).classList.remove('active');
+    editTask(taskId);
+  } else if (
     event.target.classList.contains('delete-button') ||
     event.target.parentElement.classList.contains('delete-button')
   ) {
-    /** Delete task button */
+    /** Task delete button */
     const taskId = event.target.closest('.task').id;
     listBoard.querySelector(`#${taskId} .menu`).classList.remove('active');
     deleteTask(taskId);
   }
+});
+
+listIndicators[0].addEventListener('click', () => {
+  listBoard.classList.remove('center', 'end');
+  listBoard.classList.add('start');
+  listIndicators[1].classList.remove('active');
+  listIndicators[2].classList.remove('active');
+  listIndicators[0].classList.add('active');
+});
+
+listIndicators[1].addEventListener('click', () => {
+  listBoard.classList.remove('start', 'end');
+  listBoard.classList.add('center');
+  listIndicators[0].classList.remove('active');
+  listIndicators[2].classList.remove('active');
+  listIndicators[1].classList.add('active');
+});
+
+listIndicators[2].addEventListener('click', () => {
+  listBoard.classList.remove('start', 'center');
+  listBoard.classList.add('end');
+  listIndicators[0].classList.remove('active');
+  listIndicators[1].classList.remove('active');
+  listIndicators[2].classList.add('active');
 });

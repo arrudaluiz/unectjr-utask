@@ -121,6 +121,7 @@
     <div class="task-modal">
       <div class="task-header">
         <span class="label">Nova Task</span>
+        <span class="edit-label">Editar Task</span>
         <div class="style-bar"></div>
         <button id="close-task-modal-button" class="close" aria-label="Fechar formulário de tarefa">
           <span class="material-icons icon" aria-hidden="true">close</span>
@@ -131,7 +132,9 @@
         <input type="text" id="title" name="title" required>
         <label for="description">Descrição</label>
         <textarea id="description" name="description" rows="4"></textarea>
-        <input type="submit" value="Criar task">
+        <input class="create-button" type="submit" value="Criar task">
+        <input class="edit-button" type="submit" value="Salvar task">
+        <input type="hidden">
       </form>
     </div>
   </div>
