@@ -252,6 +252,16 @@ listBoard.addEventListener('click', (event) => {
     const taskId = event.target.closest('.task').id;
     moveTaskForward(taskId);
   } else if (
+    event.target.classList.contains('expand') ||
+    event.target.parentElement.classList.contains('expand')
+  ) {
+    /** Expand task description button */
+    const taskId = event.target.closest('.task').id;
+    const children = listBoard.querySelector(`#${taskId} .task-info`).children;
+    for (const child of children) {
+      child.classList.toggle('active');
+    }
+  } else if (
     event.target.classList.contains('more-button') ||
     event.target.parentElement.classList.contains('more-button')
   ) {
@@ -266,19 +276,5 @@ listBoard.addEventListener('click', (event) => {
     const taskId = event.target.closest('.task').id;
     listBoard.querySelector(`#${taskId} .menu`).classList.remove('active');
     deleteTask(taskId);
-  }
-});
-
-const taskInfos = listBoard.querySelectorAll('.task-info');
-taskInfos.forEach((taskInfo) => {
-  if (taskInfo.firstElementChild) {
-    console.log(taskInfo.firstElementChild);
-    taskInfo.addEventListener('click', () => {
-      const expandButtons = taskInfo.querySelectorAll('.expand');
-      expandButtons.forEach((expandButton) =>
-        expandButton.classList.toggle('active')
-      );
-      taskInfo.querySelector('.description').classList.toggle('active');
-    });
   }
 });

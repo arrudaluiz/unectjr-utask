@@ -376,6 +376,7 @@ main {
   align-items: center;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .task .expand span {
@@ -393,6 +394,7 @@ main {
   margin: 6px 0 0;
   font-size: 12px;
   font-weight: 400;
+  cursor: default;
 }
 
 .task .expand.active,
